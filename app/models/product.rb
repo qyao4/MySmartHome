@@ -9,6 +9,14 @@ class Product < ApplicationRecord
 
   before_validation :set_default_discount, on: [:create, :update]
 
+  def self.ransackable_attributes(auth_object = nil)
+    ["category_id", "created_at", "description", "discount", "id", "id_value", "name", "price", "quantity", "updated_at"]
+  end
+
+  def self.ransackable_associations(auth_object = nil)
+    ["category"]
+  end
+
   private
 
   def set_default_discount
