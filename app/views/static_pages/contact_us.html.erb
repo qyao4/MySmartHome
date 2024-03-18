@@ -1,0 +1,12 @@
+<h1>Contact Us</h1>
+<% if @contact_info %>
+  <p><strong>Address:</strong> <%= @contact_info.address %></p>
+  <p><strong>Postal Code:</strong> <%= @contact_info.postal_code %></p>
+  <p><strong>Phone:</strong> <%= @contact_info.phone %></p>
+  <p><strong>Email:</strong> <%= @contact_info.email %></p>
+  <div>
+    <%= raw @contact_info.content %>
+  </div>
+<% else %>
+  <p>Contact information is not available.</p>
+<% end %>
