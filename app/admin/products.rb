@@ -16,7 +16,7 @@ ActiveAdmin.register Product do
   # end
 
   # all the fields
-  permit_params :name, :description, :quantity, :price, :discount, :category_id
+  permit_params :name, :description, :quantity, :price, :discount, :category_id, images: []
 
   index do
     selectable_column
@@ -27,6 +27,11 @@ ActiveAdmin.register Product do
     column :quantity
     column :price
     column :discount
+    column :images do |product|
+      if product.images.attached?
+        image_tag url_for(product.images.first), width: '50' # adjust size
+      end
+    end
     actions
   end
 
@@ -43,11 +48,12 @@ ActiveAdmin.register Product do
       f.input :quantity, as: :number
       f.input :price
       f.input :discount, as: :number, hint: 'Enter a value between 0 and 1 for discount.'
+      f.input :images, as: :file, input_html: { multiple: true }
     end
     f.actions
   end
 
-  show do
+  show do |product|
     attributes_table do
       row :name
       row :category
@@ -55,6 +61,15 @@ ActiveAdmin.register Product do
       row :quantity
       row :price
       row :discount
+      row :images do
+        ul do
+          product.images.each do |img|
+            li do
+              image_tag url_for(img)
+            end
+          end
+        end
+      end
     end
     active_admin_comments
   end
