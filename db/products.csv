@@ -1,8 +1,21 @@
-name,description
-Hub,"A smart hub is essentially a control center for the smart devices in your home. The hub lets you connect, communicate, and manage different devices from one interface. "
-Sensor,"Smart-home sensors are incredibly powerful detection and data-collection devices that can make a home more comfortable, efficient and safe. "
-Controller,"A smart switch offers a convenient way to control your lights with a tap, smartphone app, or voice command."
-Camera,Smart cameras are an excellent addition to any modern home.
-DoorLock,Smart door locks are becoming an increasingly popular means of safeguarding homes and offices everywhere.
-Lighting,The ability to set lighting automations ensures you do not leave bulbs on when not in use
-Curtain Controller,"Smart curtain controllers automate your privacy and comfort, but they can also help reduce energy bills throughout the year."
+name,description,quantity,price,category_id
+Hub M2,Hub-M2,128,49.99,2
+Hub M1S,Hub-M1S-Gen-2,50,39.99,2
+Hub E1,Hub-E1,83,29.99,2
+Motion Sensor,Motion-Sensor,53,24.99,3
+Water Leak Sensor,Water-Leak-Sensor,68,18.99,3
+Door and Window Sensor,Door-and-Window-Sensor-P1,72,29.99,3
+Presence Sensor,Presence-Sensor-FP2,36,82.99,3
+Wireless Mini Switch,Wireless-Mini-Switch,145,17.99,4
+Wall Switch H1,Smart_Wall_Switch_H1-No-Neutral,68,32.49,4
+Wireless Remote Switch,Wireless_Remote_Switch_H1,72,22.49,4
+Smart Wall Switch,Smart-Wall-Switch-No-Neutral,112,44.99,4
+Camera E1,Camera-E1,62,99.49,5
+Camera G3,Camera-Hub-G3,83,109.99,5
+Smart Lock U100,Smart-Door-Lock-U100,50,189.99,6
+Smart Door Lock D100,Smart-Door-Lock-D100-Zigbee,40,229.49,6
+Ceiling Light,Ceiling-Light-T1M,55,159.99,7
+LED Strip,LED-Strip-T1,90,49.99,7
+Curtain Driver Track,Curtain-Driver-E1-Track-Version,45,89.99,8
+Curtain Driver Rod,Curtain-Driver-E1-Rod-Version,35,82.49,8
+Roller Shade Driver,Roller-Shade-Driver-E1,67,32.99,8
