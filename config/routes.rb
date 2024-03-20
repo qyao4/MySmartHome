@@ -3,6 +3,10 @@ Rails.application.routes.draw do
   devise_for :admin_users, ActiveAdmin::Devise.config
   ActiveAdmin.routes(self)
 
+  root to: 'products#index'
+
+  #resources :products
+
   get 'contactus', to: 'static_pages#contact_us', as: :contact_us
   get 'aboutus', to: 'static_pages#about_us', as: :about_us
 

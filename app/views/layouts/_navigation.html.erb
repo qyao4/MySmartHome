@@ -1,0 +1,36 @@
+<!-- app/views/_navigation.html.erb -->
+<nav class="bg-white shadow">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="flex justify-between h-16">
+      <div class="flex">
+        <!-- Logo -->
+        <div class="flex-shrink-0 flex items-center">
+          <%# <img class="h-8 w-8" src="/path_to_your_logo" alt="Your Logo"> %>
+          <%= image_tag('logo.png', alt: 'SmartNest', class: "rounded-full h-24 w-24 object-cover") %>
+        </div>
+        <!-- Primary Navigation Menu -->
+        <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
+          <%= link_to 'Product', root_path, class: "#{'border-indigo-500 text-gray-900' if current_page?(root_path)} inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium" %>
+          <%= link_to 'Contact Us', contact_us_path, class: "#{'border-indigo-500 text-gray-900' if current_page?(contact_us_path)} inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium" %>
+          <%= link_to 'About Us', about_us_path, class: "#{'border-indigo-500 text-gray-900' if current_page?(about_us_path)} inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium" %>
+        </div>
+      </div>
+
+      <!-- Mobile menu button -->
+      <div class="sm:hidden">
+        <button onclick="toggleMobileMenu()" class="inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-gray-500 focus:outline-none focus:text-gray-500 transition duration-150 ease-in-out">
+          <svg class="h-6 w-6" stroke="currentColor" fill="none" viewBox="0 0 24 24">
+            <path id="mobile-menu-icon" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
+          </svg>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Mobile menu -->
+  <div id="mobile-menu" class="sm:hidden hidden">
+    <%= link_to 'Product', root_path, class: "#{'text-indigo-500' if current_page?(root_path)} block px-3 py-2 rounded-md text-base font-medium" %>
+    <%= link_to 'Contact Us', contact_us_path, class: "#{'text-indigo-500' if current_page?(contact_us_path)} block px-3 py-2 rounded-md text-base font-medium" %>
+    <%= link_to 'About Us', about_us_path, class: "#{'text-indigo-500' if current_page?(about_us_path)} block px-3 py-2 rounded-md text-base font-medium" %>
+  </div>
+</nav>
