@@ -1,4 +1,17 @@
 <!-- app/views/products/index.html.erb -->
+
+<!--search area -->
+<div class="mt-4 flex justify-center">
+  <%= form_with(url: root_path, method: :get, local: true, class: "mb-6") do |form| %>
+    <div class="flex space-x-2">
+      <%= form.text_field :search, placeholder: "Search products...", class: "px-4 py-2 border rounded shadow-sm" %>
+      <%= form.select :category, options_for_select( Category.all.map { |category| [category.name, category.id] }, selected: params[:category]), include_blank: 'Select Category', class: "px-4 py-2 border rounded shadow-sm" %>
+      <%= form.submit "Search", class: "bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" %>
+    </div>
+  <% end %>
+</div>
+
+<!--grid area -->
 <div class="container mx-auto px-6 py-8">
   <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
     <% @products.each do |product| %>
@@ -9,17 +22,30 @@
           </div>
         <% else %>
           <div class="flex justify-center items-center w-16 h-16">
-            <%= image_tag "placeholder-image.png", alt: "No image available", class: "h-48 w-full object-cover" %>
+            <%= image_tag "logo.png", alt: "No image available", class: "h-48 w-full object-cover" %>
           </div>
         <% end %>
         <div class="p-4 flex-1 flex flex-col">
           <h2 class="font-bold text-lg mb-2"><%= product.name %></h2>
           <p class="text-gray-800 mb-4 flex-1"><%= product.description %></p>
+          <% if product.created_at > 3.days.ago %>
+            <span class="text-green-500">NEW</span>
+          <% elsif product.updated_at > 3.days.ago %>
+            <span class="text-blue-500">Recently updated</span>
+          <% end %>
           <div class="flex justify-between items-end mt-4">
-            <span class="text-gray-600"><%= number_to_currency(product.price) %></span>
+            <!--<span class="text-gray-600"><%= number_to_currency(product.price) %></span>-->
+            <% if product.discount.present? && product.discount < 1 %>
+              <div>
+                <span class="text-gray-500 line-through"><%= number_to_currency(product.price) %></span>
+                <span class="text-red-500 font-bold"><%= number_to_currency(product.price * product.discount) %> On Sale</span>
+              </div>
+            <% else %>
+              <span class="text-gray-600"><%= number_to_currency(product.price) %></span>
+            <% end %>
             <div>
               <%= link_to 'Learn More', contact_us_path(product), class: "text-blue-600 hover:underline" %>
-              <%= link_to 'Buy Now', contact_us_path(product), class: "bg-blue-600 text-white py-2 px-4 rounded hover:bg-blue-700" %>
+              <%#<%= link_to 'Buy Now', contact_us_path(product), class: "bg-blue-600 text-white py-2 px-4 rounded hover:bg-blue-700" %>
             </div>
           </div>
         </div>
@@ -32,17 +58,3 @@
 <div class="my-8">
   <%= paginate @products %>
 </div>
-
-<%# <div class="container mx-auto px-4">
-    <div class="grid grid-cols-3 gap-4">
-        <div class="bg-blue-500 h-32 flex justify-center items-center text-white">Item 1</div>
-        <div class="bg-green-500 h-32 flex justify-center items-center text-white">Item 2</div>
-        <div class="bg-red-500 h-32 flex justify-center items-center text-white">Item 3</div>
-        <div class="bg-yellow-500 h-32 flex justify-center items-center text-white">Item 4</div>
-        <div class="bg-purple-500 h-32 flex justify-center items-center text-white">Item 5</div>
-        <div class="bg-pink-500 h-32 flex justify-center items-center text-white">Item 6</div>
-        <div class="bg-indigo-500 h-32 flex justify-center items-center text-white">Item 7</div>
-        <div class="bg-gray-500 h-32 flex justify-center items-center text-white">Item 8</div>
-        <div class="bg-orange-500 h-32 flex justify-center items-center text-white">Item 9</div>
-    </div>
-</div> %>
