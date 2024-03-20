@@ -10,6 +10,9 @@
     </div>
   <% end %>
 </div>
+<%= link_to 'On Sale Products', root_path(on_sale: true), class: "some-css-class" %>
+<%= link_to 'New Products', root_path(new: true), class: "some-css-class" %>
+<%= link_to 'Recently Updated', root_path(updated: true), class: "some-css-class" %>
 
 <!--grid area -->
 <div class="container mx-auto px-6 py-8">
