@@ -1,63 +1,82 @@
 <!-- app/views/products/index.html.erb -->
+<div class="flex">
+  <!-- Categories sidebar -->
+  <div class="w-1/5 bg-white shadow-md">
+    <h2 class="text-xl font-semibold p-4 border-b">Categories</h2>
+    <ul class="overflow-y-auto">
+      <% Category.all.each do |category| %>
+        <li class="<%= 'bg-gray-200' if params[:category].to_i == category.id %> p-4 border-b hover:bg-gray-100">
+          <%= link_to category.name, root_path(category: category.id) %>
+        </li>
+      <% end %>
+    </ul>
+  </div>
 
-<!--search area -->
-<div class="mt-4 flex justify-center">
-  <%= form_with(url: root_path, method: :get, local: true, class: "mb-6") do |form| %>
-    <div class="flex space-x-2">
-      <%= form.text_field :search, placeholder: "Search products...", class: "px-4 py-2 border rounded shadow-sm" %>
-      <%= form.select :category, options_for_select( Category.all.map { |category| [category.name, category.id] }, selected: params[:category]), include_blank: 'Select Category', class: "px-4 py-2 border rounded shadow-sm" %>
-      <%= form.submit "Search", class: "bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" %>
+  <div class="flex-1">
+    <!--search area -->
+    <div class="mt-4 flex justify-center">
+      <%= form_with(url: root_path, method: :get, local: true, class: "mb-6") do |form| %>
+        <div class="flex space-x-2">
+          <%= form.text_field :search, placeholder: "Search products...", class: "px-4 py-2 border rounded shadow-sm" %>
+          <%= form.select :category, options_for_select( Category.all.map { |category| [category.name, category.id] }, selected: params[:category]), include_blank: 'Select Category', class: "px-4 py-2 border rounded shadow-sm" %>
+          <%= form.submit "Search", class: "bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" %>
+        </div>
+      <% end %>
     </div>
-  <% end %>
-</div>
-<%= link_to 'On Sale Products', root_path(on_sale: true), class: "some-css-class" %>
-<%= link_to 'New Products', root_path(new: true), class: "some-css-class" %>
-<%= link_to 'Recently Updated', root_path(updated: true), class: "some-css-class" %>
+    <!--filter links -->
+    <div class="flex justify-center my-4 space-x-4">
+      <%= link_to 'On Sale Products', root_path(on_sale: true), class: "px-4 py-2 bg-green-500 text-white rounded hover:bg-green-600" %>
+      <%= link_to 'New Products', root_path(new: true), class: "px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600" %>
+      <%= link_to 'Recently Updated', root_path(updated: true), class: "px-4 py-2 bg-yellow-500 text-white rounded hover:bg-yellow-600" %>
+    </div>
 
-<!--grid area -->
-<div class="container mx-auto px-6 py-8">
-  <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-    <% @products.each do |product| %>
-      <div class="bg-white rounded-lg shadow overflow-hidden flex flex-col">
-        <% if product.images.attached? %>
-          <div class="flex justify-center items-center w-16 h-16">
-            <%= image_tag product.images.first.variant(resize_to_limit: [69, 69]), class: "object-cover rounded-md border-gray-300 shadow-sm max-w-none" %>
-          </div>
-        <% else %>
-          <div class="flex justify-center items-center w-16 h-16">
-            <%= image_tag "logo.png", alt: "No image available", class: "h-48 w-full object-cover" %>
-          </div>
-        <% end %>
-        <div class="p-4 flex-1 flex flex-col">
-          <h2 class="font-bold text-lg mb-2"><%= product.name %></h2>
-          <p class="text-gray-800 mb-4 flex-1"><%= product.description %></p>
-          <% if product.created_at > 3.days.ago %>
-            <span class="text-green-500">NEW</span>
-          <% elsif product.updated_at > 3.days.ago %>
-            <span class="text-blue-500">Recently updated</span>
-          <% end %>
-          <div class="flex justify-between items-end mt-4">
-            <!--<span class="text-gray-600"><%= number_to_currency(product.price) %></span>-->
-            <% if product.discount.present? && product.discount < 1 %>
-              <div>
-                <span class="text-gray-500 line-through"><%= number_to_currency(product.price) %></span>
-                <span class="text-red-500 font-bold"><%= number_to_currency(product.price * product.discount) %> On Sale</span>
+    <!--grid area -->
+    <div class="container mx-auto px-6 py-8">
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+        <% @products.each do |product| %>
+          <div class="bg-white rounded-lg shadow overflow-hidden flex flex-col">
+            <% if product.images.attached? %>
+              <div class="flex justify-center items-center w-16 h-16">
+                <%= image_tag product.images.first.variant(resize_to_limit: [69, 69]), class: "object-cover rounded-md border-gray-300 shadow-sm max-w-none" %>
               </div>
             <% else %>
-              <span class="text-gray-600"><%= number_to_currency(product.price) %></span>
+              <div class="flex justify-center items-center w-16 h-16">
+                <%= image_tag "default_device.png", alt: "No image available", width: "69", height: "69", class: "object-cover" %>
+              </div>
             <% end %>
-            <div>
-              <%= link_to 'Learn More', contact_us_path(product), class: "text-blue-600 hover:underline" %>
-              <%#<%= link_to 'Buy Now', contact_us_path(product), class: "bg-blue-600 text-white py-2 px-4 rounded hover:bg-blue-700" %>
+            <div class="p-4 flex-1 flex flex-col">
+              <h2 class="font-bold text-lg mb-2"><%= product.name %></h2>
+              <p class="text-gray-800 mb-4 flex-1"><%= product.description %></p>
+              <% if product.created_at > 3.days.ago %>
+                <span class="text-green-500">NEW</span>
+              <% elsif product.updated_at > 3.days.ago %>
+                <span class="text-blue-500">Recently updated</span>
+              <% end %>
+              <div class="flex justify-between items-end mt-4">
+                <!--<span class="text-gray-600"><%= number_to_currency(product.price) %></span>-->
+                <% if product.discount.present? && product.discount < 1 %>
+                  <div>
+                    <span class="text-gray-500 line-through"><%= number_to_currency(product.price) %></span>
+                    <span class="text-red-500 font-bold"><%= number_to_currency(product.price * product.discount) %> On Sale</span>
+                  </div>
+                <% else %>
+                  <span class="text-gray-600"><%= number_to_currency(product.price) %></span>
+                <% end %>
+                <div>
+                  <%= link_to 'Learn More', contact_us_path(product), class: "text-blue-600 hover:underline" %>
+                  <%#<%= link_to 'Buy Now', contact_us_path(product), class: "bg-blue-600 text-white py-2 px-4 rounded hover:bg-blue-700" %>
+                </div>
+              </div>
             </div>
           </div>
-        </div>
+        <% end %>
       </div>
-    <% end %>
+      <div class="my-8">
+        <%= paginate @products %>
+      </div>
+    </div>
   </div>
+
 </div>
 
 
-<div class="my-8">
-  <%= paginate @products %>
-</div>
