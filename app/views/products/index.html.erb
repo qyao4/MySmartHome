@@ -37,7 +37,7 @@
           <div class="bg-white rounded-lg shadow overflow-hidden flex flex-col">
             <% if product.images.attached? %>
               <div class="flex justify-center items-center w-16 h-16">
-                <%= image_tag product.images.first.variant(resize_to_limit: [69, 69]), class: "object-cover rounded-md border-gray-300 shadow-sm max-w-none" %>
+                <%= image_tag product.images.first.variant(resize_to_limit: [69, 69]), alt:"product image", class: "object-cover rounded-md border-gray-300 shadow-sm max-w-none" %>
               </div>
             <% else %>
               <div class="flex justify-center items-center w-16 h-16">
@@ -63,7 +63,7 @@
                   <span class="text-gray-600"><%= number_to_currency(product.price) %></span>
                 <% end %>
                 <div>
-                  <%= link_to 'Learn More', contact_us_path(product), class: "text-blue-600 hover:underline" %>
+                  <%= link_to 'Learn More', product_path(product), class: "text-blue-600 hover:underline" %>
                   <%#<%= link_to 'Buy Now', contact_us_path(product), class: "bg-blue-600 text-white py-2 px-4 rounded hover:bg-blue-700" %>
                 </div>
               </div>

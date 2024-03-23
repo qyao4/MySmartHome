@@ -6,7 +6,7 @@ Rails.application.routes.draw do
   root to: 'products#index'
 
   #resources :products
-
+  resources :products, only: [:index, :show]
   get 'contactus', to: 'static_pages#contact_us', as: :contact_us
   get 'aboutus', to: 'static_pages#about_us', as: :about_us
 

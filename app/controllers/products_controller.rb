@@ -26,6 +26,10 @@ class ProductsController < ApplicationController
     if params[:recently_updated].present? && params[:recently_updated] == 'true'
       @products = @products.where("updated_at > ? AND created_at <= ?", 3.days.ago, 3.days.ago)
     end
-
   end
+
+  def show
+    @product = Product.find(params[:id])
+  end
+
 end
