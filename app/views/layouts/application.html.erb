@@ -22,11 +22,44 @@
     </header>
     <%= yield %>
 
+
     <!-- Flash messages -->
     <% flash.each do |type, message| %>
       <div class="<%= flash_class(type) %> p-4 mb-4 text-sm text-white rounded-lg flash-notice" role="alert">
         <span class="font-medium"><%= message %></span>
       </div>
+
+      <script>
+        // js alert
+        // alert("<%= j message %>");
+        setupFlashNotices();
+      </script>
+
     <% end %>
+
+    <script>
+      function setupFlashNotices() {
+        const flashNotices = document.querySelectorAll('.flash-notice');
+
+        flashNotices.forEach(flashNotice => {
+          setTimeout(() => {
+            fadeOut(flashNotice);
+          }, 3000); // fade out in 3s
+        });
+      }
+
+      function fadeOut(element) {
+        let op = 1;  // Initialize the opacity
+        const timer = setInterval(() => {
+          if (op <= 0.01){
+            clearInterval(timer);
+            element.style.display = 'none';
+          }
+          element.style.opacity = op;
+          op -= op * 0.1;
+        }, 30);
+      }
+    </script>
+
   </body>
 </html>
