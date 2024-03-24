@@ -9,6 +9,9 @@ Rails.application.routes.draw do
   resources :products, only: [:index, :show]
   get 'cart', to: 'carts#show'
   post 'cart/add', to: 'carts#add_to_cart', as: :add_to_cart
+  post 'cart/update', to: 'carts#update', as: :update_cart
+  delete 'cart/remove_item', to: 'carts#remove_item', as: :remove_cart_item
+
   get 'contactus', to: 'static_pages#contact_us', as: :contact_us
   get 'aboutus', to: 'static_pages#about_us', as: :about_us
 

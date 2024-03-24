@@ -51,4 +51,52 @@ class CartsController < ApplicationController
 
     redirect_to product_path(product_id)
   end
+
+  def update
+
+    puts "======= PARAMS ======="
+    puts params.inspect
+    puts "======================"
+
+    puts "======= Session ======="
+    puts session[:cart].inspect
+    puts "======================"
+
+    product_id = params[:product_id]
+    quantity = params[:quantity][product_id].to_i
+
+    # update cart in session
+    if quantity > 0
+      session[:cart][product_id] = quantity
+    else
+      session[:cart][product_id] = 0
+    end
+
+    #flash[:notice] = "Cart updated successfully!"
+    redirect_to cart_path
+  end
+
+  def remove_item
+
+    puts "======= Session ======="
+    puts session[:cart].inspect
+    puts "======================"
+
+    puts "======= PARAMS ======="
+    puts params.inspect
+    puts "======================"
+
+    product_id = params[:product_id].to_s
+
+    # delete product_id from session
+    session[:cart].delete(product_id)
+
+    puts "======= Session ======="
+    puts session[:cart].inspect
+    puts "======================"
+
+    #flash[:notice] = "Item removed from cart successfully!"
+    redirect_to cart_path
+  end
+
 end

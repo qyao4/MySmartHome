@@ -1,4 +1,21 @@
 <!-- app/views/carts/show.html.erb -->
+<style>
+  .remove-button {
+    background: transparent !important;
+    border: none !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    font-weight: normal !important;
+    color: blue !important;
+    text-decoration: none !important;
+    text-shadow: none;
+  }
+  .remove-button:hover {
+    color: darkblue !important;
+    text-decoration: underline !important;
+  }
+</style>
+
 <div class="container mx-auto p-6">
   <h2 class="text-2xl font-bold mb-4">Shopping Cart</h2>
 
@@ -11,44 +28,56 @@
       <!-- Shopping Cart Items -->
       <div class="flex flex-col md:flex-row md:space-x-6 space-y-6 md:space-y-0 bg-white p-6 rounded-lg shadow-lg">
         <!-- Product List -->
-        <div class="flex-grow">
+        <div class="flex-grow md:w-4/5 w-full">
           <% @cart_items.each do |item| %>
-            <div class="flex items-center hover:bg-gray-100 -mx-8 px-6 py-5">
-              <div class="flex w-2/5"> <!-- product -->
-                <div class="w-20">
-                  <%= image_tag(item[0].images.first.variant(resize_to_limit: [400, 400]), class: "w-20 h-20 object-cover rounded", alt: "#{item[0].name}") %>
+              <div class="flex items-center hover:bg-gray-100 -mx-8 px-6 py-5">
+                <div class="flex w-2/5"> <!-- product -->
+                  <div class="w-20">
+                    <%= image_tag(item[0].images.first.variant(resize_to_limit: [400, 400]), class: "w-20 h-20 object-cover rounded", alt: "#{item[0].name}") %>
+                  </div>
+                  <div class="flex flex-col justify-between ml-4 flex-grow">
+                    <span class="font-bold text-sm"><%= item[0].name %></span>
+                    <span class="text-red-500 text-xs"><%= item[0].category.name %></span>
+
+                    <%# <a href="#" class="font-semibold hover:text-red-500 text-gray-500 text-xs">Remove</a> %>
+                    <%= button_to 'Remove', remove_cart_item_path(product_id: item[0].id), method: :delete, class: "remove-button" %>
+                  </div>
                 </div>
-                <div class="flex flex-col justify-between ml-4 flex-grow">
-                  <span class="font-bold text-sm"><%= item[0].name %></span>
-                  <span class="text-red-500 text-xs"><%= item[0].category.name %></span>
-                  <a href="#" class="font-semibold hover:text-red-500 text-gray-500 text-xs">Remove</a>
+                <div class="flex justify-center w-1/5">
+                  <%= form_tag update_cart_path, method: :post do %>
+                    <%= hidden_field_tag :product_id, item[0].id %>
+                    <%= number_field_tag "quantity[#{item[0].id}]", item[1], min: 0, class: "mx-2 border text-center w-16", onchange: "this.form.
+                  submit();" %>
+                  <% end %>
                 </div>
+                <span class="text-center w-1/5 font-semibold text-sm"><%= number_to_currency(item[0].price) %></span>
               </div>
-              <div class="flex justify-center w-1/5">
-                <%= number_field_tag "quantity[#{item[0].id}]", item[1], min: 1, class: "mx-2 border text-center w-8" %>
-              </div>
-              <span class="text-center w-1/5 font-semibold text-sm"><%= number_to_currency(item[0].price) %></span>
-            </div>
+
           <% end %>
         </div>
         <!-- Total Section -->
-        <div id="summary" class="w-full md:w-1/4 px-8 py-10">
-          <h1 class="font-semibold text-2xl border-b pb-8">Order Summary</h1>
+        <div id="summary" class="md:w-1/5 px-8 py-10">
+          <h3 class="font-semibold text-2xl border-b pb-8">Summary</h3>
+          <!--
           <div class="flex justify-between mt-10 mb-5">
             <span class="font-semibold text-sm uppercase">Items <%= @total_quantity %></span>
             <span class="font-semibold text-sm"><%= number_to_currency(@total_price) %></span>
           </div>
-
+           -->
+          <!--
           <div class="py-10">
             <label for="promo" class="font-semibold inline-block mb-3 text-sm uppercase">Promo Code</label>
             <input type="text" id="promo" placeholder="Enter your code" class="p-2 text-sm w-full">
           </div>
-
           <button class="bg-red-500 hover:bg-red-600 px-5 py-2 text-sm text-white uppercase">Apply</button>
-
+          -->
           <div class="border-t mt-8">
             <div class="flex font-semibold justify-between py-6 text-sm uppercase">
-              <span>Total cost</span>
+              <span>Item:</span>
+              <span><%= @total_quantity %></span>
+            </div>
+            <div class="flex font-semibold justify-between py-6 text-sm uppercase">
+              <span>Total:</span>
               <span><%= number_to_currency(@total_price) %></span>
             </div>
             <button class="bg-indigo-500 font-semibold hover:bg-indigo-600 py-3 text-sm text-white uppercase w-full">Checkout</button>
