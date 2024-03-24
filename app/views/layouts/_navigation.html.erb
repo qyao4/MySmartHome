@@ -13,6 +13,7 @@
           <%= link_to 'Product', root_path, class: "#{'border-indigo-500 text-gray-900' if current_page?(root_path)} inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium" %>
           <%= link_to 'Contact Us', contact_us_path, class: "#{'border-indigo-500 text-gray-900' if current_page?(contact_us_path)} inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium" %>
           <%= link_to 'About Us', about_us_path, class: "#{'border-indigo-500 text-gray-900' if current_page?(about_us_path)} inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium" %>
+          <%= link_to 'Cart', cart_path, class: "#{'border-indigo-500 text-gray-900' if current_page?(cart_path)} inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium" %>
         </div>
       </div>
 
@@ -32,5 +33,6 @@
     <%= link_to 'Product', root_path, class: "#{'text-indigo-500' if current_page?(root_path)} block px-3 py-2 rounded-md text-base font-medium" %>
     <%= link_to 'Contact Us', contact_us_path, class: "#{'text-indigo-500' if current_page?(contact_us_path)} block px-3 py-2 rounded-md text-base font-medium" %>
     <%= link_to 'About Us', about_us_path, class: "#{'text-indigo-500' if current_page?(about_us_path)} block px-3 py-2 rounded-md text-base font-medium" %>
+    <%= link_to 'Cart', cart_path, class: "#{'text-indigo-500' if current_page?(cart_path)} block px-3 py-2 rounded-md text-base font-medium" %>
   </div>
 </nav>

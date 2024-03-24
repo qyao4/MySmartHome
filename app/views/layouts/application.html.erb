@@ -21,5 +21,12 @@
       <%= render 'layouts/navigation' %>
     </header>
     <%= yield %>
+
+    <!-- Flash messages -->
+    <% flash.each do |type, message| %>
+      <div class="<%= flash_class(type) %> p-4 mb-4 text-sm text-white rounded-lg flash-notice" role="alert">
+        <span class="font-medium"><%= message %></span>
+      </div>
+    <% end %>
   </body>
 </html>

@@ -7,6 +7,8 @@ Rails.application.routes.draw do
 
   #resources :products
   resources :products, only: [:index, :show]
+  get 'cart', to: 'carts#show'
+  post 'cart/add', to: 'carts#add_to_cart', as: :add_to_cart
   get 'contactus', to: 'static_pages#contact_us', as: :contact_us
   get 'aboutus', to: 'static_pages#about_us', as: :about_us
 
