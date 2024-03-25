@@ -18,6 +18,7 @@
       <!-- Cart link aligned to the right -->
       <div class="flex items-center">
         <%= link_to 'Cart', cart_path, class: "#{'border-indigo-500 text-gray-900' if current_page?(cart_path)} inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium" %>
+        <%= link_to 'Account', user_path, class: "#{'border-indigo-500 text-gray-900' if current_page?(user_path)} inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium" %>
       </div>
 
       <!-- Mobile menu button -->
