@@ -48,3 +48,25 @@
 # end
 
 # puts "Imported products from CSV"
+
+
+# Populate the 'provinces' table
+# provinces = [
+#   { name: "Alberta", abbr: "AB", gst: 5, pst: 0, hst: 0 },
+#   { name: "British Columbia", abbr: "BC", gst: 5, pst: 7, hst: 0 },
+#   { name: "Manitoba", abbr: "MB", gst: 5, pst: 7, hst: 0 },
+#   { name: "New Brunswick", abbr: "NB", gst: 0, pst: 0, hst: 15 },
+#   { name: "Newfoundland and Labrador", abbr: "NL", gst: 0, pst: 0, hst: 15 },
+#   { name: "Northwest Territories", abbr: "NT", gst: 5, pst: 0, hst: 0 },
+#   { name: "Nova Scotia", abbr: "NS", gst: 0, pst: 0, hst: 15 },
+#   { name: "Nunavut", abbr: "NU", gst: 5, pst: 0, hst: 0 },
+#   { name: "Ontario", abbr: "ON", gst: 0, pst: 0, hst: 13 },
+#   { name: "Prince Edward Island", abbr: "PE", gst: 0, pst: 0, hst: 15 },
+#   { name: "Quebec", abbr: "QC", gst: 5, pst: 9.96, hst: 0 },
+#   { name: "Saskatchewan", abbr: "SK", gst: 5, pst: 6, hst: 0 },
+#   { name: "Yukon", abbr: "YT", gst: 5, pst: 0, hst: 0 }
+# ]
+
+# provinces.each do |province|
+#   Province.create(province)
+# end
