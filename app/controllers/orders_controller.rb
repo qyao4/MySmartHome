@@ -1,0 +1,96 @@
+class OrdersController < ApplicationController
+
+  before_action :authenticate_user!, only: [:new, :create]
+  before_action :set_user
+
+  def new
+    @order = Order.new
+
+    @total_quantity = 0
+    @total_price = 0
+
+    if params[:ref] == 'product'
+      product = Product.find(params[:product_id]) if params[:product_id]
+      quantity = 1
+      @total_quantity = quantity
+      @total_price = product.price
+      @products = [[product, quantity]]
+    elsif params[:ref] == 'cart'
+      @cart = session[:cart] || {}
+      @products = Product.where(id: @cart.keys).map do |product|
+        quantity = @cart[product.id.to_s].to_i
+        @total_quantity += quantity
+        @total_price += product.price * quantity
+        [product, quantity]
+      end
+    else
+      # from order...
+    end
+
+    # Calculate taxes and final total
+    calculate_taxes
+  end
+
+  def create
+    @order = current_user.orders.build(order_params)
+
+    # calculate_taxes_for(@order)
+
+    if @order.save
+
+      puts "======= ORDER CREATE PARAMS ======="
+      puts  params.inspect
+      puts "======================"
+
+      # session[:cart] = nil if params[:ref] == 'cart'
+      flash[:notice] = "Order was successfully created.!"
+
+      redirect_to payment_path, notice: 'Order was successfully created.'
+    else
+      flash.now[:alert] = 'There was a problem creating your order.'
+      #render :new
+      redirect_back(fallback_location: new_order_path)
+    end
+  end
+
+  def show
+    @order = Order.find(params[:id])
+  end
+
+  def set_user
+    @user = current_user if user_signed_in?
+  end
+
+  def calculate_taxes
+    gst_rate = (@user.province.gst || 0) / 100.0
+    pst_rate = (@user.province.pst || @user.province.hst || 0) / 100.0
+
+    @gst = (@total_price * gst_rate).round(2)
+    @pst = (@total_price * pst_rate).round(2)
+
+    @total_with_taxes = (@total_price + @gst + @pst).round(2)
+  end
+
+  def calculate_taxes_for(order)
+    gst_rate = (order.province.gst || 0) / 100.0
+    pst_rate = (order.province.pst || order.province.hst || 0) / 100.0
+
+    order_items_total = order.order_items.sum { |item| item.price * item.quantity }
+
+    gst = (order_items_total * gst_rate).round(2)
+    pst = (order_items_total * pst_rate).round(2)
+
+    order.gst = gst
+    order.pst = pst
+    order.total_price = (order_items_total + gst + pst).round(2)
+  end
+
+  private
+    def order_params
+      # params.require(:order).permit(:user_id, :product_id, :quantity, :total_price, :gst, :pst, :total_with_taxes)
+      params.require(:order).permit(
+        :address, :city, :province_id, :post_code, :status,
+        order_items_attributes: [:product_id, :quantity, :price]
+      )
+    end
+end

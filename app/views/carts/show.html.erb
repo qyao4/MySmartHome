@@ -80,7 +80,8 @@
               <span>Total:</span>
               <span><%= number_to_currency(@total_price) %></span>
             </div>
-            <button class="bg-indigo-500 font-semibold hover:bg-indigo-600 py-3 text-sm text-white uppercase w-full">Checkout</button>
+            <%# <button class="bg-indigo-500 font-semibold hover:bg-indigo-600 py-3 text-sm text-white uppercase w-full">Checkout</button> %>
+            <%= link_to 'Checkout', new_order_path(ref: 'cart'), method: :get, class: "px-6 py-2 border border-transparent text-base font-medium rounded-md text-white bg-green-600 hover:bg-green-700" %>
           </div>
         </div>
       </div>

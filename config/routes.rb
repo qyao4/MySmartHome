@@ -15,6 +15,12 @@ Rails.application.routes.draw do
 
   get 'user', to: 'users#index'
 
+  # orders
+  resources :orders
+
+  get 'payment', to:'orders#payment'
+
+
   get 'contactus', to: 'static_pages#contact_us', as: :contact_us
   get 'aboutus', to: 'static_pages#about_us', as: :about_us
 

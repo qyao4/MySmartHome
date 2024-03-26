@@ -1,3 +1,10 @@
+<style>
+  .text-white {
+    color: white !important;
+    text-decoration: none !important;
+  }
+</style>
+
 <!-- app/views/products/show.html.erb -->
 <div class="container mx-auto px-4 py-8 flex flex-col md:flex-row space-y-4 md:space-y-0 md:space-x-4">
   <!-- Image slider for product images -->
@@ -58,7 +65,11 @@
     <!-- Action buttons -->
     <div class="flex space-x-4">
       <%= button_to 'Add to Cart', add_to_cart_path(product_id: @product.id), method: :post, class: "px-6 py-2 border border-transparent text-base font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700" %>
-      <button class="px-6 py-2 border border-transparent text-base font-medium rounded-md text-white bg-green-600 hover:bg-green-700">Buy Now</button>
+      <% if user_signed_in? %>
+        <%= link_to 'Buy Now', new_order_path(product_id: @product.id, ref: 'product'), method: :get, class: "px-6 py-2 border border-transparent text-base font-medium rounded-md text-white bg-green-600 hover:bg-green-700" %>
+      <% else %>
+        <%= link_to 'Buy Now', user_path, class: "px-6 py-2 border border-transparent text-base font-medium rounded-md text-white bg-green-600 hover:bg-green-700" %>
+      <% end %>
       <%# <button class="px-6 py-2 border border-transparent text-base font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700">Add to Cart</button>
       <button class="px-6 py-2 border border-transparent text-base font-medium rounded-md text-white bg-green-600 hover:bg-green-700">Buy Now</button> %>
     </div>
