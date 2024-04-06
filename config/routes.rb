@@ -16,10 +16,27 @@ Rails.application.routes.draw do
   get 'user', to: 'users#index'
 
   # orders
+  # # Index
+  # get '/orders', to: 'orders#index', as: 'orders'
+  # # Show
+  # get '/orders/:id', to: 'orders#show', as: 'order'
+  # # New
+  # get '/orders/new', to: 'orders#new', as: 'new_order'
+  # # Edit
+  # get '/orders/:id/edit', to: 'orders#edit', as: 'edit_order'
+  # # Create
+  # post '/orders', to: 'orders#create'
+  # # Update
+  # # 注意：Rails通常使用PATCH作为更新资源的HTTP方法
+  # patch '/orders/:id', to: 'orders#update'
+  # # 如果你也想支持PUT，可以这样添加：
+  # put '/orders/:id', to: 'orders#update'
+  # # Destroy
+  # delete '/orders/:id', to: 'orders#destroy'
   resources :orders
-  get 'my_orders', to: 'orders#index'
 
-  get 'payment', to:'orders#payment'
+  get 'my_orders', to: 'orders#index'
+  get 'payment', to:'payments#payment'
 
 
   get 'contactus', to: 'static_pages#contact_us', as: :contact_us

@@ -82,7 +82,6 @@
 </div>
 
 <div class="flex justify-end mt-5 mb-5 mr-6">
-
   <%= form_for Order.new, url: orders_path do |f| %>
     <% @products.each do |product, quantity| %>
       <%= fields_for "order[order_items_attributes][]", OrderItem.new do |oi| %>
@@ -99,7 +98,9 @@
     <%= f.hidden_field :gst, value: @gst %>
     <%= f.hidden_field :pst, value: @pst %>
     <%= f.hidden_field :total_with_taxes, value: @total_with_taxes %>
+    <%= f.hidden_field :ref, value:@ref %>
     <% if @existing_order.nil? || @existing_order.status == 'unpaid' %>
+      <%= f.hidden_field :refid, value:@existing_order.id%>
       <%= f.submit 'Proceed to Checkout', class: 'bg-red-600 hover:bg-red-700 text-white font-bold py-2 px-4 rounded' %>
     <% end %>
   <% end %>

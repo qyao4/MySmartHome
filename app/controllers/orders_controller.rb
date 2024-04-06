@@ -14,6 +14,7 @@ class OrdersController < ApplicationController
 
     @total_quantity = 0
     @total_price = 0
+    @ref = params[:ref]
 
     if params[:ref] == 'product'
       product = Product.find(params[:product_id]) if params[:product_id]
@@ -58,19 +59,27 @@ class OrdersController < ApplicationController
   end
 
   def create
-    @order = current_user.orders.build(order_params)
 
     puts "======= ORDER CREATE PARAMS ======="
     puts  params.inspect
     puts "======================"
 
+    puts "ref:#{params[:order][:ref]}"
+    puts "refid:#{params[:refid]}"
+
+    if  params[:order][:ref] == 'order'
+      redirect_to payment_path(id:params[:order][:refid]), notice: 'Order was successfully created.'
+      return;
+    end
+
+    @order = current_user.orders.build(order_params)
     # calculate_taxes_for(@order)
 
     if @order.save
       # session[:cart] = nil if params[:ref] == 'cart'
       flash[:notice] = "Order was successfully created.!"
 
-      redirect_to payment_path, notice: 'Order was successfully created.'
+      redirect_to payment_path(id:@order.id), notice: 'Order was successfully created.'
     else
       flash.now[:alert] = 'There was a problem creating your order.'
       #render :new
