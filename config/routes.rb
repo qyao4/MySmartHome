@@ -37,6 +37,10 @@ Rails.application.routes.draw do
 
   get 'my_orders', to: 'orders#index'
   get 'payment', to:'payments#payment'
+  # post 'payments/create_payment_intent', to: 'payments#create_payment_intent' ,as: 'payment_intent'
+  post 'payments/create_checkout_session', to: 'payments#create_checkout_session' ,as: 'payment_session'
+  get 'payments/success', to:'payments#success'
+  get 'payments/success', to:'payments#cancel'
 
 
   get 'contactus', to: 'static_pages#contact_us', as: :contact_us
