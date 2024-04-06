@@ -1,0 +1,48 @@
+<%# app/views/orders/index.html.erb %>
+<h1 class="text-3xl font-bold text-gray-800 mb-6">My Orders</h1>
+
+<% if @orders.empty? %>
+  <p class="text-gray-600">You have no past orders.</p>
+<% else %>
+  <% @orders.each do |order| %>
+    <div class="mb-8 p-6 bg-gray-100 bg-white shadow-lg rounded-lg">
+      <div class="flex justify-between items-center border-b pb-4 mb-4">
+        <div>
+          <h2 class="text-xl font-bold text-gray-700">Order ID: <%= order.id %></h2>
+          <p class="text-sm text-gray-600">Status: <%= order.status.capitalize %></p>
+        </div>
+        <div>
+          <p class="text-sm font-medium text-gray-700">Order placed on <%= order.created_at.strftime("%B %d, %Y") %></p>
+          <p class="text-sm font-medium text-gray-700">Total: $<%= '%.2f' % order.total_with_taxes %></p>
+        </div>
+      </div>
+
+      <% order.order_items.each do |item| %>
+        <div class="flex items-center justify-between mb-4">
+          <div class="flex items-center">
+            <%# Display product image if available %>
+            <% if item.product.images.attached? %>
+              <%= image_tag item.product.images.first, class: "h-16 w-16 object-cover rounded-full mr-4" %>
+            <% end %>
+            <div>
+              <h3 class="text-lg font-semibold text-gray-800"><%= item.product.name %></h3>
+              <p class="text-gray-600">Quantity: <%= item.quantity %></p>
+            </div>
+          </div>
+          <p class="text-gray-600">$<%= '%.2f' % (item.price * item.quantity) %></p>
+        </div>
+      <% end %>
+
+      <div class="pt-4 border-t flex justify-between items-center">
+        <div>
+          <p class="text-gray-600">GST: $<%= '%.2f' % order.gst %></p>
+          <p class="text-gray-600">PST/HST: $<%= '%.2f' % order.pst %></p>
+          <p class="text-gray-800 font-bold">Grand Total: $<%= '%.2f' % order.total_with_taxes %></p>
+        </div>
+        <div>
+          <%= link_to 'View order details', new_order_path(ref: 'order', order_id: order.id), class: "text-blue-600 hover:text-blue-800 font-semibold" %>
+        </div>
+      </div>
+    </div>
+  <% end %>
+<% end %>

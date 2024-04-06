@@ -5,6 +5,7 @@
   <p>Email: <%= @user.email %></p>
   <!-- Additional user info here -->
   <%= link_to 'Edit Profile', edit_user_registration_path %> |
+  <%= link_to 'My Order', my_orders_path %>
   <%= button_to 'Logout', destroy_user_session_path, method: :delete %>
 <% else %>
   <!-- login section -->

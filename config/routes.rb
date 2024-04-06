@@ -17,6 +17,7 @@ Rails.application.routes.draw do
 
   # orders
   resources :orders
+  get 'my_orders', to: 'orders#index'
 
   get 'payment', to:'orders#payment'
 

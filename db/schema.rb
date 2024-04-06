@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_03_26_171647) do
+ActiveRecord::Schema[7.1].define(version: 2024_03_26_204342) do
   create_table "active_admin_comments", force: :cascade do |t|
     t.string "namespace"
     t.text "body"
@@ -102,6 +102,9 @@ ActiveRecord::Schema[7.1].define(version: 2024_03_26_171647) do
     t.string "post_code"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.decimal "gst", precision: 10, scale: 2
+    t.decimal "pst", precision: 10, scale: 2
+    t.decimal "total_with_taxes", precision: 10, scale: 2
     t.index ["province_id"], name: "index_orders_on_province_id"
     t.index ["user_id"], name: "index_orders_on_user_id"
   end

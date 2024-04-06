@@ -1,7 +1,13 @@
 class OrdersController < ApplicationController
 
-  before_action :authenticate_user!, only: [:new, :create]
+  before_action :authenticate_user! #, only: [:new, :create]
   before_action :set_user
+
+
+  def index
+    @orders = current_user.orders.includes(order_items: :product)
+  end
+
 
   def new
     @order = Order.new
@@ -15,6 +21,8 @@ class OrdersController < ApplicationController
       @total_quantity = quantity
       @total_price = product.price
       @products = [[product, quantity]]
+      # Calculate taxes and final total
+      calculate_taxes
     elsif params[:ref] == 'cart'
       @cart = session[:cart] || {}
       @products = Product.where(id: @cart.keys).map do |product|
@@ -23,25 +31,42 @@ class OrdersController < ApplicationController
         @total_price += product.price * quantity
         [product, quantity]
       end
+      # Calculate taxes and final total
+      calculate_taxes
     else
       # from order...
+      order_id = params[:order_id]
+      # search for order by order_id
+      @existing_order = Order.find_by(id: order_id, user: current_user)
+      if @existing_order.present?
+        @products = @existing_order.order_items.includes(:product).map do |item|
+          product = item.product
+          quantity = item.quantity
+          @total_quantity += quantity
+          @total_price += item.price * quantity
+          [product, quantity]
+        end
+        @total_with_taxes = @existing_order.total_with_taxes
+        @gst = @existing_order.gst
+        @pst = @existing_order.pst
+      else
+        redirect_to orders_path, alert: 'Order not found.'
+      end
     end
 
-    # Calculate taxes and final total
-    calculate_taxes
+
   end
 
   def create
     @order = current_user.orders.build(order_params)
 
+    puts "======= ORDER CREATE PARAMS ======="
+    puts  params.inspect
+    puts "======================"
+
     # calculate_taxes_for(@order)
 
     if @order.save
-
-      puts "======= ORDER CREATE PARAMS ======="
-      puts  params.inspect
-      puts "======================"
-
       # session[:cart] = nil if params[:ref] == 'cart'
       flash[:notice] = "Order was successfully created.!"
 
@@ -89,8 +114,15 @@ class OrdersController < ApplicationController
     def order_params
       # params.require(:order).permit(:user_id, :product_id, :quantity, :total_price, :gst, :pst, :total_with_taxes)
       params.require(:order).permit(
-        :address, :city, :province_id, :post_code, :status,
-        order_items_attributes: [:product_id, :quantity, :price]
-      )
+      :address,
+      :city,
+      :province_id,
+      :post_code,
+      :status,
+      :gst,
+      :pst,
+      :total_with_taxes,
+      order_items_attributes: [:product_id, :quantity, :price]
+    )
     end
 end
