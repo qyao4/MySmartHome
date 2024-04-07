@@ -2,20 +2,43 @@
 <!-- <%= @order.inspect %> -->
 <script src="https://js.stripe.com/v3/"></script>
 
-<h1>Payment for Order <%= @order.id %></h1>
-
-<div class="order-details">
-  <h2>Order Summary</h2>
-  <ul>
-    <li>Address: <%= @order.address %></li>
-    <li>City: <%= @order.city %></li>
-    <li>Province: <%= Province.find(@order.province_id).name %></li>
-    <li>Postal Code: <%= @order.post_code %></li>
-    <li>Total Price: $<%= "%.2f" % @order.total_with_taxes %></li>
-  </ul>
-  <button id="checkout-button" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Checkout</button>
+<div class="min-h-screen bg-gray-100 flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
+  <div class="max-w-md w-full space-y-8">
+    <div>
+      <h1 class="mt-6 text-center text-3xl font-extrabold text-gray-900">
+        Payment for Order <%= @order.id %>
+      </h1>
+    </div>
+    <div class="bg-white shadow overflow-hidden sm:rounded-lg p-6">
+      <h2 class="text-lg leading-6 font-medium text-gray-900">Order Summary</h2>
+      <ul class="divide-y divide-gray-200 mt-4">
+        <li class="py-4 flex justify-between">
+          <span class="text-sm font-medium text-gray-500">Address:</span>
+          <span class="text-sm text-gray-900"><%= @order.address %></span>
+        </li>
+        <li class="py-4 flex justify-between">
+          <span class="text-sm font-medium text-gray-500">City:</span>
+          <span class="text-sm text-gray-900"><%= @order.city %></span>
+        </li>
+        <li class="py-4 flex justify-between">
+          <span class="text-sm font-medium text-gray-500">Province:</span>
+          <span class="text-sm text-gray-900"><%= Province.find(@order.province_id).name %></span>
+        </li>
+        <li class="py-4 flex justify-between">
+          <span class="text-sm font-medium text-gray-500">Postal Code:</span>
+          <span class="text-sm text-gray-900"><%= @order.post_code %></span>
+        </li>
+        <li class="py-4 flex justify-between">
+          <span class="text-sm font-medium text-gray-500">Total Price:</span>
+          <span class="text-sm text-gray-900">$<%= "%.2f" % @order.total_with_taxes %></span>
+        </li>
+      </ul>
+      <button id="checkout-button" class="w-full bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline mt-6">
+        Checkout
+      </button>
+    </div>
+  </div>
 </div>
-
 
 <script>
   var stripe = Stripe('<%= Rails.application.credentials.stripe[:publishable_key] %>');

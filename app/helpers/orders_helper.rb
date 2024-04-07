@@ -16,7 +16,7 @@ module OrdersHelper
     end
   end
 
-  def lignt_on(order,step)
+  def light_on(order,step)
     return false if order.nil?
 
     lights = 0
