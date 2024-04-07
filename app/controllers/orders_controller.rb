@@ -68,7 +68,7 @@ class OrdersController < ApplicationController
     puts "refid:#{params[:refid]}"
 
     if  params[:order][:ref] == 'order'
-      redirect_to payment_path(id:params[:order][:refid]), notice: 'Order was successfully created.'
+      redirect_to payment_path(id:params[:order][:refid]), notice: 'Order was being paid.'
       return;
     end
 

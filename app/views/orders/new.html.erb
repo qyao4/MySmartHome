@@ -12,17 +12,16 @@
     background: #e0e0e0;
     width: 100%;
     position: absolute;
-    top: 15px; /* 位置调整使得节点在上方 */
+    top: 15px;
     z-index: 1;
   }
 
-  /* 新添加的进度指示部分 */
   .progress-indicator {
     height: 4px;
     background: #4CAF50;
     position: absolute;
-    top: 15px; /* 与progress-track对齐 */
-    z-index: 2; /* 在progress-track之上 */
+    top: 15px;
+    z-index: 2;
   }
 
   .progress-step {
@@ -34,7 +33,7 @@
     align-items: center;
     justify-content: center;
     z-index: 3;
-    position: relative; /* 相对于父元素progress-bar定位 */
+    position: relative;
   }
 
   .progress-step span{
@@ -46,7 +45,7 @@
     /* content: attr(data-step); */
     color: black;
     position: absolute;
-    top: 30px; /* 文字位置调整到线下方 */
+    top: 30px;
   }
 
   .progress-step-active {
@@ -68,9 +67,9 @@
   <div class="progress-track"></div>
   <div class="progress-indicator" style="width: <%= progress_width(@existing_order) %>;"></div>
   <div class="progress-step progress-step-active" data-step="1"><span>Unpaid</span></div>
-  <div class="progress-step <%= 'progress-step-active' if @existing_order.present? && @existing_order.status.to_sym == :paid or @existing_order.status.to_sym == :shipping or @existing_order.status.to_sym == :completed %>" data-step="2"><span>Paid</span></div>
-  <div class="progress-step <%= 'progress-step-active' if @existing_order.present? && @existing_order.status.to_sym == :shipping or @existing_order.status.to_sym == :completed %>" data-step="3"><span>Shipping</span></div>
-  <div class="progress-step <%= 'progress-step-active' if @existing_order.present? && @existing_order.status.to_sym == :completed %>" data-step="4"><span>Completed</span></div>
+  <div class="progress-step <%= 'progress-step-active' if lignt_on(@existing_order,2) %>" data-step="2"><span>Paid</span></div>
+  <div class="progress-step <%= 'progress-step-active' if lignt_on(@existing_order,3) %>" data-step="3"><span>Shipping</span></div>
+  <div class="progress-step <%= 'progress-step-active' if lignt_on(@existing_order,4) %>" data-step="4"><span>Completed</span></div>
 </div>
 
 
@@ -170,8 +169,10 @@
     <%= f.hidden_field :pst, value: @pst %>
     <%= f.hidden_field :total_with_taxes, value: @total_with_taxes %>
     <%= f.hidden_field :ref, value:@ref %>
-    <% if @existing_order.nil? || @existing_order.status == 'unpaid' %>
+    <% if @existing_order.present? %>
       <%= f.hidden_field :refid, value:@existing_order.id%>
+    <% end %>
+    <% if @existing_order.nil? || @existing_order.status == 'unpaid' %>
       <%= f.submit 'Proceed to Checkout', class: 'bg-red-600 hover:bg-red-700 text-white font-bold py-2 px-4 rounded' %>
     <% end %>
   <% end %>

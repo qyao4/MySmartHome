@@ -15,4 +15,23 @@ module OrdersHelper
       '0%'
     end
   end
+
+  def lignt_on(order,step)
+    return false if order.nil?
+
+    lights = 0
+    lights = lights + 1 if order.status.to_sym == :unpaid
+    lights = lights + 1 if order.status.to_sym == :paid
+    lights = lights + 1 if order.status.to_sym == :shipping
+    lights = lights + 1 if order.status.to_sym == :completed
+
+    if step <= lights
+      true
+    else
+      false
+
+    end
+
+  end
+
 end
