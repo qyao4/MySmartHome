@@ -1,28 +1,31 @@
 <%# app/views/payments/success.html.erb %>
 
-<h1>Payment Successful!</h1>
+<div class="min-h-screen bg-gray-100 flex flex-col items-center justify-center px-4 py-12">
+  <div class="bg-white shadow overflow-hidden sm:rounded-lg p-6 mb-4 text-center">
+    <h1 class="text-2xl font-bold text-green-600 mb-4">Payment Successful!</h1>
+    <div class="success-message mb-4">
+      <p class="text-lg">Thank you for your purchase!</p>
+      <p class="text-md">Your order #<%= @order.id %> has been successfully processed.</p>
+      <p class="text-md font-semibold">Total Paid: $<%= "%.2f" % @order.total_with_taxes %></p>
+    </div>
+  </div>
 
-<div class="success-message">
-  <p>Thank you for your purchase!</p>
-  <p>Your order #<%= @order.id %> has been successfully processed.</p>
-  <p>Total Paid: $<%= "%.2f" % @order.total_with_taxes %></p>
+  <div class="bg-white shadow overflow-hidden sm:rounded-lg p-6 mb-4 w-full sm:w-2/3 lg:w-1/2">
+    <h2 class="text-xl font-semibold text-gray-800 mb-4">Order Details</h2>
+    <ul class="list-disc pl-5 text-left">
+      <% @order.order_items.each do |item| %>
+        <li class="mb-1"><%= item.product.name %>: $<%= "%.2f" % item.price %> x <%= item.quantity %></li>
+      <% end %>
+    </ul>
+  </div>
+
+  <div class="bg-white shadow overflow-hidden sm:rounded-lg p-6 mb-6 w-full sm:w-2/3 lg:w-1/2 text-center">
+    <p>Your items will be shipped to you soon. You will receive an email with tracking details.</p>
+  </div>
+
+  <div class="navigation space-x-4">
+    <a href="<%= root_path %>" style="color: white !important;" class="bg-green-600 hover:bg-green-800 font-bold py-2 px-4 rounded transition duration-300 ease-in-out">
+      Return to Homepage
+    </a>
 </div>
-
-<div class="order-details">
-  <h2>Order Details</h2>
-  <ul>
-    <% @order.order_items.each do |item| %>
-      <li><%= item.product.name %>: $<%= "%.2f" % item.price %> x <%= item.quantity %></li>
-    <% end %>
-  </ul>
 </div>
-
-<div class="next-steps">
-  <p>Your items will be shipped to you soon. You will receive an email with tracking details.</p>
-</div>
-
-<div class="navigation">
-  <a href="<%= root_path %>" class="button">Return to Homepage</a>
-  <a href="<%= orders_path %>" class="button">View My Orders</a>
-</div>
-
