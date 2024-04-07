@@ -1,0 +1,28 @@
+[33m6927196[m[33m ([m[1;36mHEAD -> [m[1;32mmain[m[33m, [m[1;31morigin/main[m[33m, [m[1;31morigin/breadcrumbs[m[33m, [m[1;32mbreadcrumbs[m[33m)[m beautify breadcrumbs
+[33m244a898[m add breadcrumbs
+[33m51d0b1d[m imporve progress bar
+[33m7af70a4[m order status progress bar
+[33m16d8777[m add stripe interface
+[33ma121671[m add payment page
+[33m017aa55[m complete order
+[33mb5a34f3[m cart to order
+[33mc25a795[m user sign up
+[33mcd1579e[m populate provinces table
+[33ma5965ec[m cart edit
+[33mc956607[m flash notice
+[33m779ca40[m add session hash
+[33m8ecee29[m add carousel
+[33m428b651[m product details page
+[33m269e17e[m Navigate through the available products by category
+[33m1c22213[m filtering onsale new feature
+[33mec5585e[m search feature added
+[33m0576bd7[m show products to customers
+[33mdc4495e[m populate products table
+[33m481d0cd[m populate categories
+[33m36f6a2d[m add contact-us about-us pages
+[33m5c6efaa[m Add or update images to products
+[33m4cea215[m add product&category to active admin
+[33ma3d61f4[m Gain access to an admin dashboard
+[33m284221c[m add default to product
+[33m954d170[m add product and category
+[33m3cde1ea[m initial commit

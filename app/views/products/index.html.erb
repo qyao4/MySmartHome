@@ -2,9 +2,9 @@
 
 <%= render 'products/breadcrumbs' %>
 
-<div class="flex">
-  <!-- Categories sidebar -->
-  <div class="w-1/5 bg-white shadow-md">
+<div class="flex flex-col md:flex-row">
+  <!-- Categories sidebar for desktop, hidden on mobile -->
+  <div class="hidden md:block md:w-1/4 bg-white shadow-md">
     <h2 class="text-xl font-semibold p-4 border-b">Categories</h2>
     <ul class="overflow-y-auto">
       <% Category.all.each do |category| %>
@@ -15,7 +15,7 @@
     </ul>
   </div>
 
-  <div class="flex-1">
+  <div class="flex-1 p-4">
     <!--search area -->
     <div class="mt-4 flex justify-center">
       <%= form_with(url: root_path, method: :get, local: true, class: "mb-6") do |form| %>
@@ -34,8 +34,8 @@
     </div>
 
     <!--grid area -->
-    <div class="container mx-auto px-6 py-8">
-      <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+    <div class="container mx-auto">
+      <div class="grid grid-cols-1 lg:grid-cols-3 gap-4">
         <% @products.each do |product| %>
           <div class="bg-white rounded-lg shadow overflow-hidden flex flex-col">
             <% if product.images.attached? %>
@@ -74,7 +74,7 @@
           </div>
         <% end %>
       </div>
-      <div class="my-8">
+      <div class="mt-8">
         <%= paginate @products %>
       </div>
     </div>
