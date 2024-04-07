@@ -9,6 +9,8 @@ class ProductsController < ApplicationController
     # Filter by category
     if params[:category].present?
       @products = @products.where(category: params[:category])
+      @category = Category.find(params[:category])
+      @breadcrumbs << { title: @category.name, url: root_path(category: @category.id) }
     end
 
     # Filter products that are on sale
@@ -30,6 +32,8 @@ class ProductsController < ApplicationController
 
   def show
     @product = Product.find(params[:id])
+    @breadcrumbs << { title: @product.category.name, url: root_path(category: @product.category.id) }
+    @breadcrumbs << { title: @product.name, url: "#" }
   end
 
 end

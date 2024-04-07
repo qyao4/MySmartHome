@@ -1,0 +1,13 @@
+<nav aria-label="breadcrumb">
+  <ol class="breadcrumb">
+    <% @breadcrumbs.each do |breadcrumb| %>
+      <li class="breadcrumb-item">
+        <% if breadcrumb[:url] %>
+          <%= link_to breadcrumb[:title], breadcrumb[:url] %>
+        <% else %>
+          <%= breadcrumb[:title] %>
+        <% end %>
+      </li>
+    <% end %>
+  </ol>
+</nav>
