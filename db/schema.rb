@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_03_26_204342) do
+ActiveRecord::Schema[7.1].define(version: 2024_04_06_224246) do
   create_table "active_admin_comments", force: :cascade do |t|
     t.string "namespace"
     t.text "body"
@@ -109,6 +109,18 @@ ActiveRecord::Schema[7.1].define(version: 2024_03_26_204342) do
     t.index ["user_id"], name: "index_orders_on_user_id"
   end
 
+  create_table "payments", force: :cascade do |t|
+    t.integer "order_id", null: false
+    t.integer "user_id", null: false
+    t.decimal "amount"
+    t.integer "status"
+    t.string "session_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["order_id"], name: "index_payments_on_order_id"
+    t.index ["user_id"], name: "index_payments_on_user_id"
+  end
+
   create_table "products", force: :cascade do |t|
     t.string "name"
     t.text "description"
@@ -163,6 +175,8 @@ ActiveRecord::Schema[7.1].define(version: 2024_03_26_204342) do
   add_foreign_key "order_items", "products"
   add_foreign_key "orders", "provinces"
   add_foreign_key "orders", "users"
+  add_foreign_key "payments", "orders"
+  add_foreign_key "payments", "users"
   add_foreign_key "products", "categories"
   add_foreign_key "users", "provinces"
 end

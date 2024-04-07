@@ -1,7 +1,78 @@
+<style>
+  .progress-bar {
+    display: flex;
+    justify-content: space-between;
+    position: relative;
+    width: 50%;
+    margin: 0 auto;
+  }
+
+  .progress-track {
+    height: 4px;
+    background: #e0e0e0;
+    width: 100%;
+    position: absolute;
+    top: 15px; /* 位置调整使得节点在上方 */
+    z-index: 1;
+  }
+
+  /* 新添加的进度指示部分 */
+  .progress-indicator {
+    height: 4px;
+    background: #4CAF50;
+    position: absolute;
+    top: 15px; /* 与progress-track对齐 */
+    z-index: 2; /* 在progress-track之上 */
+  }
+
+  .progress-step {
+    width: 25px;
+    height: 25px;
+    background: #e0e0e0;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 3;
+    position: relative; /* 相对于父元素progress-bar定位 */
+  }
+
+  .progress-step span{
+    position: absolute;
+    top: 3em;
+  }
+
+  .progress-step::after {
+    /* content: attr(data-step); */
+    color: black;
+    position: absolute;
+    top: 30px; /* 文字位置调整到线下方 */
+  }
+
+  .progress-step-active {
+    background: #4CAF50;
+  }
+
+  .progress-step-active::after {
+    color: #fff;
+  }
+</style>
+
+
 <%# app/views/orders/new.html.erb %>
 <h1>Order Summary</h1>
 
 <%# <%= @existing_order.inspect %>
+
+<div class="progress-bar">
+  <div class="progress-track"></div>
+  <div class="progress-indicator" style="width: 33%;"></div>
+  <div class="progress-step progress-step-active" data-step="1"><span>Unpaid</span></div>
+  <div class="progress-step <%= 'progress-step-active' if @existing_order.present? && @existing_order.status.to_sym == :paid or @existing_order.status.to_sym == :shipping or @existing_order.status.to_sym == :completed %>" data-step="2"><span>Paid</span></div>
+  <div class="progress-step <%= 'progress-step-active' if @existing_order.present? && @existing_order.status.to_sym == :shipping or @existing_order.status.to_sym == :completed %>" data-step="3"><span>Shipping</span></div>
+  <div class="progress-step <%= 'progress-step-active' if @existing_order.present? && @existing_order.status.to_sym == :completed %>" data-step="4"><span>Completed</span></div>
+</div>
+
 
 <div class="container mx-auto mt-8">
   <div class="bg-white p-6 rounded-md shadow-md">

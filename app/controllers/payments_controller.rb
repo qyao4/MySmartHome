@@ -36,9 +36,17 @@ class PaymentsController < ApplicationController
   def success
     @order = current_user.orders.find_by(id: params[:order_id])
     @session_id = params[:session_id]
-    # if @order.present?
+    if @order.present?
+      @order.update(status: :paid);
 
-    # end
+      payment = Payment.create(
+        order_id: @order.id,
+        user_id: current_user.id,
+        amount: @order.total_with_taxes,
+        status: :successful,
+        session_id: @session_id
+      )
+    end
   end
 
   # # POST /payments/create_payment_intent

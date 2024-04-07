@@ -2,9 +2,27 @@
 
 <h1>Payment Successful!</h1>
 
-<p>
-<%= @order.inspect %>
-</p>
+<div class="success-message">
+  <p>Thank you for your purchase!</p>
+  <p>Your order #<%= @order.id %> has been successfully processed.</p>
+  <p>Total Paid: $<%= "%.2f" % @order.total_with_taxes %></p>
+</div>
 
-<%= @session_id %>
+<div class="order-details">
+  <h2>Order Details</h2>
+  <ul>
+    <% @order.order_items.each do |item| %>
+      <li><%= item.product.name %>: $<%= "%.2f" % item.price %> x <%= item.quantity %></li>
+    <% end %>
+  </ul>
+</div>
+
+<div class="next-steps">
+  <p>Your items will be shipped to you soon. You will receive an email with tracking details.</p>
+</div>
+
+<div class="navigation">
+  <a href="<%= root_path %>" class="button">Return to Homepage</a>
+  <a href="<%= orders_path %>" class="button">View My Orders</a>
+</div>
 
