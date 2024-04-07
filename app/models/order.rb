@@ -11,4 +11,8 @@ class Order < ApplicationRecord
     ["address", "city", "created_at", "gst", "id", "id_value", "post_code", "province_id", "pst", "status", "total_with_taxes", "updated_at", "user_id"]
   end
 
+  def self.ransackable_associations(auth_object = nil)
+    ["order_items", "province", "user"]
+  end
+
 end
