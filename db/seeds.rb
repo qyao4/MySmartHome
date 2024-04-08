@@ -70,3 +70,31 @@
 # provinces.each do |province|
 #   Province.create(province)
 # end
+
+
+
+electronic_products = [
+  "Smartphone",
+  "Laptop",
+  "Smartwatch",
+  "Tablet",
+  "E-reader",
+  "Wireless Earbuds",
+  "Bluetooth Speaker",
+  "Portable Charger",
+  "Digital Camera",
+  "Action Camera"
+]
+
+1.times do
+  product_name = electronic_products.sample
+  Product.create!(
+    name: product_name,
+    description: Faker::Lorem.sentence(word_count: 20),
+    quantity: Faker::Number.between(from: 1, to: 100),
+    price: Faker::Commerce.price(range: 50.0..1000.0),
+    discount: Faker::Commerce.price(range: 0.0..1.0),
+    category_id: Category.pluck(:id).sample
+  )
+  puts "#{product_name} inserted." || 6
+end

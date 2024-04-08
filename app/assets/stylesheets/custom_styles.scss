@@ -2,6 +2,7 @@
 $primary-color: #ffffff;
 $font-stack: Helvetica, sans-serif;
 $link-color: rgb(56, 103, 139);
+$hyper-color: #0275d8;
 
 body {
   background-color: $primary-color;
@@ -9,6 +10,7 @@ body {
 
   header {
     height: 4rem;
+    z-index: -10;
   }
 
   main {
@@ -54,4 +56,45 @@ body {
 .flash-info {
   @extend .flash-notice;
   background-color: #4299e1; // blue color
+}
+
+
+
+.breadcrumb {
+  padding: 10px 15px;
+  list-style: none; /* Removes default list styles */
+  background-color: #f5f5f5;
+  border-radius: 4px;
+}
+
+.breadcrumb > li + li:before {
+  content: "›"; /* Custom separator */
+  padding: 0 5px;
+  color: #ccc;
+}
+
+.breadcrumb-item {
+  display: inline-block;
+}
+
+.breadcrumb-item a {
+  color: $link-color; /* Hyperlink color */
+  text-decoration: none;
+}
+
+.breadcrumb-item.active {
+  color: #555; /* Active item color */
+  pointer-events: none;
+  cursor: default;
+}
+
+.breadcrumb-item:hover a {
+  text-decoration: underline !important;
+  cursor: pointer;
+  color: $hyper-color;
+}
+
+.text-white {
+  color: $primary-color !important;
+  text-decoration: none !important;
 }

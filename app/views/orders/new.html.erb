@@ -165,9 +165,9 @@
     <%= f.hidden_field :gst, value: @gst %>
     <%= f.hidden_field :pst, value: @pst %>
     <%= f.hidden_field :total_with_taxes, value: @total_with_taxes %>
-    <%= f.hidden_field :ref, value:@ref %>
+    <%= hidden_field_tag :ref, @ref %>
     <% if @existing_order.present? %>
-      <%= f.hidden_field :refid, value:@existing_order.id%>
+      <%= hidden_field_tag :refid, @existing_order.id%>
     <% end %>
     <% if @existing_order.nil? || @existing_order.status == 'unpaid' %>
       <%= f.submit 'Proceed to Checkout', class: 'bg-red-600 hover:bg-red-700 text-white font-bold py-2 px-4 rounded' %>

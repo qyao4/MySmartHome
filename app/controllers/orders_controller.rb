@@ -64,11 +64,11 @@ class OrdersController < ApplicationController
     puts  params.inspect
     puts "======================"
 
-    puts "ref:#{params[:order][:ref]}"
+    puts "ref:#{params[:ref]}"
     puts "refid:#{params[:refid]}"
 
-    if  params[:order][:ref] == 'order'
-      redirect_to payment_path(id:params[:order][:refid]), notice: 'Order was being paid.'
+    if  params[:ref] == 'order'
+      redirect_to payment_path(id:params[:refid]), notice: 'Order was being paid.'
       return;
     end
 
@@ -81,6 +81,7 @@ class OrdersController < ApplicationController
 
       redirect_to payment_path(id:@order.id), notice: 'Order was successfully created.'
     else
+      puts @order.errors.full_messages
       flash.now[:alert] = 'There was a problem creating your order.'
       #render :new
       redirect_back(fallback_location: new_order_path)
@@ -131,6 +132,7 @@ class OrdersController < ApplicationController
       :gst,
       :pst,
       :total_with_taxes,
+      :user_id,
       order_items_attributes: [:product_id, :quantity, :price]
     )
     end
