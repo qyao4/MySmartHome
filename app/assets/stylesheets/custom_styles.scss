@@ -1,0 +1,30 @@
+// variables
+$primary-color: #ffffff;
+$font-stack: Helvetica, sans-serif;
+$link-color: rgb(56, 103, 139);
+
+body {
+  background-color: $primary-color;
+  font-family: $font-stack;
+
+  header {
+    height: 4rem;
+  }
+
+  main {
+    //padding-top: 4rem; // the same with header
+    height: calc(100vh - 4rem);
+    overflow-y: auto;
+  }
+
+  // nesting
+  a {
+    text-decoration: none !important;
+    color: $link-color;
+    &:hover {
+      color: lighten($link-color, 30%);
+      //text-decoration: underline !important;
+    }
+  }
+}
+
