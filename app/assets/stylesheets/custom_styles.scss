@@ -28,3 +28,30 @@ body {
   }
 }
 
+.flash-notice {
+  padding: 1rem; // p-4 in Tailwind equivalent
+  margin-bottom: 1rem; // mb-4 in Tailwind equivalent
+  font-size: .875rem; // text-sm in Tailwind equivalent
+  border-radius: .5rem; // rounded-lg in Tailwind equivalent
+  font-weight: 500; // font-medium in Tailwind equivalent
+}
+
+.flash-success {
+  @extend .flash-notice;
+  background-color: #48bb78; // green color
+}
+
+.flash-error {
+  @extend .flash-notice;
+  background-color: #f56565; // red color
+}
+
+.flash-warning {
+  @extend .flash-notice;
+  background-color: #ecc94b; // yellow color
+}
+
+.flash-info {
+  @extend .flash-notice;
+  background-color: #4299e1; // blue color
+}

@@ -19,22 +19,23 @@
       <%= render 'layouts/navigation' %>
     </header>
     <main  class="mt-16">
+      <!-- Flash messages -->
+      <% flash.each do |type, message| %>
+        <div class="<%= flash_class(type) %> p-4 mb-4 text-sm text-white rounded-lg flash-notice" role="alert">
+          <span class="font-medium"><%= message %></span>
+        </div>
+
+        <script>
+          // js alert
+          // alert("<%= j message %>");
+          setupFlashNotices();
+        </script>
+
+      <% end %>
       <%= yield %>
     </main>
 
-    <!-- Flash messages -->
-    <% flash.each do |type, message| %>
-      <div class="<%= flash_class(type) %> p-4 mb-4 text-sm text-white rounded-lg flash-notice" role="alert">
-        <span class="font-medium"><%= message %></span>
-      </div>
 
-      <script>
-        // js alert
-        // alert("<%= j message %>");
-        setupFlashNotices();
-      </script>
-
-    <% end %>
 
     <script>
       function setupFlashNotices() {
